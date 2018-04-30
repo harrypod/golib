@@ -9,7 +9,7 @@ import (
 
 
 
-func parseMath32(s string) (f float32, err error) {
+func ParseMath32(s string) (f float32, err error) {
 	i, err := strconv.ParseUint(s, 16, 32)
 	if err != nil {
 		return
@@ -18,7 +18,7 @@ func parseMath32(s string) (f float32, err error) {
 	return
 }
 
-func parseMath64(s string) (f float64, err error) {
+func ParseMath64(s string) (f float64, err error) {
 	i, err := strconv.ParseUint(s, 16, 64)
 	if err != nil {
 		return
