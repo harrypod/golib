@@ -1,7 +1,7 @@
 // Harry Podciborski
 // Useful GoLang conversion library
 
-package podgolib
+package golib
 import (
    "math" 
    "strconv" 
