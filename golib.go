@@ -26,7 +26,7 @@ func ParseMath64(s string) (f float64, err error) {
 	return
 }
 
-func strToint(s string) int { 		// convert string to integer
+func StrToInt(s string) int { 		// convert string to integer
 	var i int
 	i,_ = strconv.Atoi(s)
 	return i
