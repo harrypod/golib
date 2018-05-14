@@ -10,6 +10,7 @@ import (
    "encoding/binary"
 )
 
+
 //ParseMath32 : Convert string to 32bit Float
 func ParseMath32(s string) (f float32, err error) {
 	i, err := strconv.ParseUint(s, 16, 32)
@@ -25,17 +26,19 @@ func ParseMath32(s string) (f float32, err error) {
 func ParseMath64(s string) (f float64, err error) {
 	i, err := strconv.ParseUint(s, 16, 64)
 	if err != nil {
-		return
+		return 0, fmt.Errorf("Error converting string to float64")	
 	}
 	f = math.Float64frombits(uint64(i))
-	return
+	return f,nil
 }
 
 //StrToInt : Convert string to integer
-func StrToInt(s string) int { 		
-	var i int
-	i,_ = strconv.Atoi(s)
-	return i
+func StrToInt(s string) (int,error) { 			
+	i,err := strconv.Atoi(s)
+	if err != nil {		
+		return 0, fmt.Errorf("Error converting string to int")	
+	} 
+	return i,nil
 }
 
 
@@ -63,7 +66,7 @@ func GetString (in []byte) string  {
 
 
 // GetInt Byte to uint64
-func GetInt (in []byte) uint64  { 		
+func GetInt (in []byte) (uint64,error)  { 		
 	var hexbuffer bytes.Buffer // concatenate x2 pairs of hex vals	
 	for i := 0; i < len(in); i+=2 {		
 		// take the next two bytes, if available
@@ -72,17 +75,17 @@ func GetInt (in []byte) uint64  {
 		hexbuffer.WriteString(hdata)	//concat
 	}
 	f, err := strconv.ParseUint(hexbuffer.String(), 16, 32)	
-	if err != nil {
-		return (0)
+	if err != nil {		
+		return 0, fmt.Errorf("Error converting byte to uint64")	
 	} 
-	return	(f)
+	return f,nil
 }
 
 
 //GetFloat32 some refernence docs:
 //https://play.golang.org/
 //http://www.perlmonks.org/?node_id=327171
-func GetFloat32 (in []byte) float32 { 		// 32bit encoded IEEE754 
+func GetFloat32 (in []byte) (float32,error) { 		// 32bit encoded IEEE754 
 	var hexbuffer bytes.Buffer // concatenate x2 pairs of hex vals	
 	for i := 0; i < len(in); i+=2 {		
 		// take the next two bytes, if available
@@ -91,15 +94,15 @@ func GetFloat32 (in []byte) float32 { 		// 32bit encoded IEEE754
 		hexbuffer.WriteString(hdata)	//concat
 	}
 	f, err := ParseMath32(hexbuffer.String())
-	if err != nil {
-		return (0)
+	if err != nil {		
+		return 0, fmt.Errorf("Error converting byte to float32")	
 	} 
-	return f
+	return f,nil
 }
 
 // GetFloat64 64bit encoded IEEE754 
 //https://www.h-schmidt.net/FloatConverter/IEEE754.html
-func GetFloat64 (in []byte) float64 { 		
+func GetFloat64 (in []byte) (float64,error) { 		
 	var hexbuffer bytes.Buffer // concatenate x2 pairs of hex vals	
 	for i := 0; i < len(in); i+=2 {		
 		// take the next two bytes, if available
@@ -108,11 +111,12 @@ func GetFloat64 (in []byte) float64 {
 		hexbuffer.WriteString(hdata)	//concat
 	}
 	f, err := ParseMath64(hexbuffer.String())
-	if err != nil {
-		return (0)
+	if err != nil {		
+		return 0, fmt.Errorf("Error converting byte to float64")	
 	} 
-	return f
+	return f,nil
 }
+
 
 // Float64ToString convert float64 to string
 func Float64ToString(inputNum float64) string {
@@ -123,14 +127,25 @@ func Float64ToString(inputNum float64) string {
 
 
 // StringToFloat - convert string to float 32
-func StringToFloat (input string) float32 { 
-	strconv.ParseFloat(input, 32)
+func StringToFloat (input string) (float32,error) { 	
 	value, err := strconv.ParseFloat(input, 32)
 	if err != nil {
-		return(0)
+		return 0, fmt.Errorf("Error converting string to float32")	
 	}
-	return float32(value)
+	return float32(value),nil
 }
+
+
+// StringToFloat64 convert String to Float64
+func StringToFloat64(input string)  (float64, error) {     
+	value, err := strconv.ParseFloat(input, 64)
+	if err != nil {
+		return 0, fmt.Errorf("Error converting string to float64")		
+	}
+	return float64(value),nil
+}
+
+
 
 
 
