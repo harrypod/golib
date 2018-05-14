@@ -7,6 +7,7 @@ import (
    "strconv" 
    "fmt"
    "bytes"
+   "encoding/binary"
 )
 
 //ParseMath32 : Convert string to 32bit Float
@@ -37,6 +38,45 @@ func StrToInt(s string) int {
 	return i
 }
 
+
+// DecodeInt attempts to convert a byte array of High/Low Byte values into
+// a 16-bit integer, and returns the result, also with an error, which will
+// be non-nil if the decoding failed.
+func DecodeInt(data []byte) (int16, error) {
+	var i int16
+	buf := bytes.NewReader(data)
+	err := binary.Read(buf, binary.BigEndian, &i)
+	return i, err
+}
+
+
+// GetString Byte to string from hex buffer
+func GetString (in []byte) string  { 
+	var hexbuffer bytes.Buffer // concatenate x2 pairs of hex vals	
+	for i := 0; i < len(in); i+=2 {			// copied 
+		var hdata  = fmt.Sprintf("%02x",in[i+1])		
+		hexbuffer.WriteString(hdata)	//concat
+	}
+	return hexbuffer.String()
+}
+
+
+
+// GetInt Byte to uint64
+func GetInt (in []byte) uint64  { 		
+	var hexbuffer bytes.Buffer // concatenate x2 pairs of hex vals	
+	for i := 0; i < len(in); i+=2 {		
+		// take the next two bytes, if available
+		// get hex data out of bytes
+		var hdata  = fmt.Sprintf("%02x",in[i:i+2])
+		hexbuffer.WriteString(hdata)	//concat
+	}
+	f, err := strconv.ParseUint(hexbuffer.String(), 16, 32)	
+	if err != nil {
+		return (0)
+	} 
+	return	(f)
+}
 
 
 //GetFloat32 some refernence docs:
