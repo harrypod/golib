@@ -113,3 +113,24 @@ func GetFloat64 (in []byte) float64 {
 	} 
 	return f
 }
+
+// Float64ToString convert float64 to string
+func Float64ToString(inputNum float64) string {
+	// to convert a float number to a string
+	// "var float float32" up here somewhere
+	return strconv.FormatFloat(inputNum, 'f', 6, 64)
+}
+
+
+// StringToFloat - convert string to float 32
+func StringToFloat (input string) float32 { 
+	strconv.ParseFloat(input, 32)
+	value, err := strconv.ParseFloat(input, 32)
+	if err != nil {
+		return(0)
+	}
+	return float32(value)
+}
+
+
+
