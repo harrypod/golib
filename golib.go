@@ -3,6 +3,7 @@
 
 package golib
 import (
+   "strings"
    "math" 
    "strconv" 
    "fmt"
@@ -146,10 +147,16 @@ func StringToFloat64(input string)  (float64, error) {
 }
 
 
-//StringTrimNull trim \u0000 (NULL) values from a string
+//StringTrimNull trim \u0000 (NULL) values from end and start of a string
 func StringTrimNull(in[]byte) []byte { 				
 	return bytes.Trim(in[:],"\x00")
 } 
+
+
+//StringRemoveWhitespace trim \u0000 (NULL) values from a string
+func StringRemoveWhitespace (in string) string { 
+	return strings.Replace(in, "\u0000", "", -1)			
+}
 
 
 
