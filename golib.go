@@ -146,6 +146,10 @@ func StringToFloat64(input string)  (float64, error) {
 }
 
 
+//StringTrimNull trim \u0000 (NULL) values from a string
+func StringTrimNull(in[]byte) []byte { 				
+	return bytes.Trim(in[:],"\x00")
+} 
 
 
 
