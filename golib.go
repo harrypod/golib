@@ -15,10 +15,10 @@ import (
 func ParseMath32(s string) (f float32, err error) {
 	i, err := strconv.ParseUint(s, 16, 32)
 	if err != nil {
-		return
+		return 0, fmt.Errorf("Error converting string to float32")
 	}
 	f = math.Float32frombits(uint32(i))
-	return
+	return f,nil
 }
 
 
