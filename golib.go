@@ -9,6 +9,7 @@ import (
    "fmt"
    "bytes"
    "encoding/binary"
+   "os"
 )
 
 
@@ -158,11 +159,16 @@ func StringRemoveWhitespace (in string) string {
 	return strings.Replace(in, "\u0000", "", -1)			
 }
 
-
+//Array to String - converts [1 2 3 4] to "1,2,3,4"
 func ArrayToString(a []int, delim string) string {
-    return strings.Trim(strings.Replace(fmt.Sprint(a), " ", delim, -1), "[]")
-    //return strings.Trim(strings.Join(strings.Split(fmt.Sprint(a), " "), delim), "[]")
-    //return strings.Trim(strings.Join(strings.Fields(fmt.Sprint(a)), delim), "[]")
+    return strings.Trim(strings.Replace(fmt.Sprint(a), " ", delim, -1), "[]")    
 }
 
-
+//return true if file exists, false if not
+func FileExists(f string) bool {
+    _, err := os.Stat(f)
+    if os.IsNotExist(err) {
+        return false
+    }
+    return err == nil
+}
